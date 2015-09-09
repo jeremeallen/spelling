@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <style>
+        input.correct {
+            background-color: #dff0d8;
+        }
+        input.started {
+            background-color: #fcf8e3;
+        }
+        #app button {
+            font-size: 1.5em;
+        }
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+  </head>
+  <body>
+    <div id="app">
+        <div class="col-md-10">
+            <ul class="list-group">
+                  <li v-repeat="spelling_words" class="list-group-item">
+                      <form class="form-inline">
+                          <div class="form-group">
+                              <label for="word-{{ order }}">#{{ order }}</label>
+                              <input
+                                    type="text"
+                                    id="word-{{ order }}"
+                                    placeholder="Spelling word #{{ order }}"
+                                    class="form-control input-lg {{ correct ? 'correct' : '' }} {{ started ? 'started' : '' }}"
+                                    v-model="user_spelling"
+                                    v-on="keyup: validateWord(this, $event)"
+                                    value="{{ user_spelling }}"
+                                    autocomplete="off"
+                                >
+                              <button class="btn btn-primary" v-on="click: playSentence(this, $event)"><i class="fa fa-play-circle"></i></button>
+                          </div>
+                      </form>
+                  </li>
+            </ul>
+        </div>
+        <div class="col-md-2">
+            <h1>{{ number_correct }} / {{ spelling_words.length }}</h1>
+        </div>
+
+        <button class="btn btn-success" v-on="click: startOver(this, $event)">Start Over</button>
+    </div>
+
+    <!-- jQuery first, then Bootstrap JS. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/0.12.13/vue.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
