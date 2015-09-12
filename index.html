@@ -33,42 +33,43 @@
     <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
   </head>
   <body>
-    <div id="app">
+    <div id="app" class="container">
         <div v-if="logged_in">
-            <div class="" role="" v-if="logged_in_email">
-                {{ logged_in_email }}
-                <a href="#" v-on="click: logout($event)">Logout</a>
-            </div>
-            <div class="alert alert-danger" role="alert" v-if="error_message">
+            <div class="alert alert-danger row" role="alert" v-if="error_message">
                 {{ error_message }}
             </div>
-            <div class="col-md-10">
-                <ul class="list-group">
-                      <li v-repeat="spelling_words" class="list-group-item">
-                          <form class="form-inline">
-                              <div class="form-group">
-                                  <label for="word-{{ order }}">#{{ order }}</label>
-                                  <input
-                                        type="text"
-                                        id="word-{{ order }}"
-                                        placeholder="Spelling word #{{ order }}"
-                                        class="form-control input-lg {{ correct ? 'correct' : '' }} {{ started ? 'started' : '' }}"
-                                        v-model="user_spelling"
-                                        v-on="keyup: validateWord(this, $event)"
-                                        value="{{ user_spelling }}"
-                                        autocomplete="off"
-                                    >
-                                  <button class="btn btn-primary" v-on="click: playSentence(this, $event)"><i class="fa fa-play-circle"></i></button>
-                              </div>
-                          </form>
-                      </li>
-                </ul>
+            <div class="row">
+                <div class="col-md-8">
+                    <ul class="list-group">
+                          <li v-repeat="spelling_words" class="list-group-item">
+                              <form class="form-inline">
+                                  <div class="form-group">
+                                      <label for="word-{{ order }}">#{{ order }}</label>
+                                      <input
+                                            type="text"
+                                            id="word-{{ order }}"
+                                            placeholder="Spelling word #{{ order }}"
+                                            class="form-control input-lg {{ correct ? 'correct' : '' }} {{ started ? 'started' : '' }}"
+                                            v-model="user_spelling"
+                                            v-on="keyup: validateWord(this, $event)"
+                                            value="{{ user_spelling }}"
+                                            autocomplete="off"
+                                        >
+                                      <button class="btn btn-primary" v-on="click: playSentence(this, $event)"><i class="fa fa-play-circle"></i></button>
+                                  </div>
+                              </form>
+                          </li>
+                    </ul>
+                </div>
+                <div class="col-md-4 text-right">
+                    <p>
+                        {{ logged_in_email }}
+                        <a href="#" v-on="click: logout($event)">Logout</a>
+                    </p>
+                    <h1>{{ number_correct }} / {{ spelling_words.length }}</h1>
+                    <button class="btn btn-success" v-on="click: startOver(this, $event)">Start Over</button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <h1>{{ number_correct }} / {{ spelling_words.length }}</h1>
-            </div>
-
-            <button class="btn btn-success" v-on="click: startOver(this, $event)">Start Over</button>
         </div>
         <div v-if="!logged_in">
             <form class="form-signin" v-on="submit: login($event)">
